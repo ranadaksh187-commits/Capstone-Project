@@ -1,0 +1,19 @@
+{
+  "name": "peerly-project",
+  "private": true,
+  "workspaces": [
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "concurrently --kill-others-on-fail --names api,frontend --prefix-colors blue,green \"npm:dev:api:node\" \"npm:dev:web\"",
+    "dev:api": "node scripts/dev-api.js",
+    "dev:api:node": "npm --prefix backend-node run dev",
+    "dev:web": "wait-on --timeout 180000 http-get://127.0.0.1:8081/api/health && npm run dev --workspace peerly-web",
+    "build": "npm run build --workspace peerly-web",
+    "preview": "npm run preview --workspace peerly-web"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.6",
+    "wait-on": "^9.5.1"
+  }
+}

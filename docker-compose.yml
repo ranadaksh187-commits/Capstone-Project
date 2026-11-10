@@ -1,0 +1,34 @@
+services:
+  mongo:
+    image: mongo:7
+    volumes:
+      - peerly-mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  node-api:
+    build: ./backend-node
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/peerly
+      PORT: 8081
+      CLIENT_ORIGINS: http://localhost:5173,http://localhost:8088
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET to a random value of at least 32 characters}
+      NODE_ENV: production
+    ports:
+      - "8081:8081"
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  web:
+    build: ./frontend
+    ports:
+      - "${APP_PORT:-8088}:80"
+    depends_on:
+      - node-api
+
+volumes:
+  peerly-mongo-data:
