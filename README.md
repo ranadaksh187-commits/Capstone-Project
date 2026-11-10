@@ -16,7 +16,7 @@ Peerly is a full-stack learning community built with React, Vite, Node.js, Expre
 
 ## Run locally
 
-Requirements: Node.js 20+, npm, and MongoDB 7+ running on `127.0.0.1:27017`.
+Requirements: Node.js 22.x through 24.x, npm, and MongoDB 7+ running on `127.0.0.1:27017`.
 
 1. Copy the Node API environment template and set a private JWT secret (at least 32 characters):
 

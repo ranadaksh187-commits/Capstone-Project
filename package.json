@@ -1,6 +1,9 @@
 {
   "name": "peerly-project",
   "private": true,
+  "engines": {
+    "node": ">=22.0.0 <25.0.0"
+  },
   "workspaces": [
     "frontend"
   ],
